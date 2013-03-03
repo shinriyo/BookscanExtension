@@ -1,17 +1,14 @@
 (function() {
 
   $(document).ready(function() {
-    var save, trans_val;
-    trans_val = window.opener.$('#transVal').val();
+    var save;
     save = function() {
-      var myBookName;
-      myBookName = $('#myBookName').val();
-      alert(myBookName);
-      console.log('myBookName' + myBookName);
-      alert(trans_val);
-      trans_val = localStorage['transVal'];
-      console.log(trans_val);
-      return localStorage[trans_val] = myBookName;
+      var name_val;
+      name_val = $('#myBookName').val();
+      chrome.extension.sendMessage({
+        "tmp": name_val
+      });
+      return window.close();
     };
     return $('form').submit(save);
   });

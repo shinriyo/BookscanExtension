@@ -1,9 +1,11 @@
 (function() {
-  var book, books, my_book_name, pdf_name, popupModal, _i, _len;
+  var book, books, my_book_name, pdf_name, popupModal, tmp_pdf_name, _i, _len;
 
   books = $('.downloading');
 
   console.log(books.length);
+
+  tmp_pdf_name = '';
 
   for (_i = 0, _len = books.length; _i < _len; _i++) {
     book = books[_i];
@@ -15,24 +17,19 @@
     } else {
       book.innerHTML = my_book_name;
     }
-    book.onclick = function() {
-//localStorage['transVal'] = name;
-      return popupModal(chrome.runtime.getURL('./mypopup.html'), pdf_name);
-    };
+    book.onclick = function() {};
+    tmp_pdf_name = pdf_name;
+    popupModal(chrome.runtime.getURL('./mypopup.html'), pdf_name);
   }
 
   popupModal = function(url, name) {
-    ele = $(document.createElement('div'))
-    ele.id = 'transVal'
-    ele.val(name)
     return window.showModalDialog(url, this, "dialogWidth=300px; dialogHeight=120px;");
   };
 
-  /*
-    ele = $(document.createElement('div'))
-    ele.id = 'transVal'
-    ele.val(name)
-  */
-
+  chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    var book_name;
+    book_name = request.tmp;
+    return localStorage[tmp_pdf_name] = book_name;
+  });
 
 }).call(this);

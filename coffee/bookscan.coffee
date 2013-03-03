@@ -1,6 +1,7 @@
 #ファイル名取得
 books = $('.downloading')
 console.log(books.length)
+tmp_pdf_name = ''
 
 for book in books
   #pdf name
@@ -14,17 +15,17 @@ for book in books
 
   book.onclick = () ->
     #alert('名前をつけよう')
-    popupModal(chrome.runtime.getURL('./mypopup.html'), pdf_name)
+  tmp_pdf_name = pdf_name
+  popupModal(chrome.runtime.getURL('./mypopup.html'), pdf_name)
 
 popupModal = (url, name) ->
-  localStorage['transVal'] = name
   window.showModalDialog(
     url, #移動先
     this, #ダイアログに渡すパラメータ（この例では、自分自身のwindowオブジェクト）
     "dialogWidth=300px; dialogHeight=120px;"
   )
-###
-  ele = $(document.createElement('div'))
-  ele.id = 'transVal'
-  ele.val(name)
-###
+
+chrome.extension.onMessage.addListener((request, sender, sendResponse)->
+  book_name = request.tmp
+  localStorage[tmp_pdf_name] = book_name
+)
