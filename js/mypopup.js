@@ -7,7 +7,7 @@
       name_val = $('#myBookName').val();
       chrome.extension.sendMessage({
         "tmp": name_val
-      });
+      }, function() {});
       return window.close();
     };
     return $('form').submit(save);
