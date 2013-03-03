@@ -16,16 +16,23 @@
       book.innerHTML = my_book_name;
     }
     book.onclick = function() {
+//localStorage['transVal'] = name;
       return popupModal(chrome.runtime.getURL('./mypopup.html'), pdf_name);
     };
   }
 
   popupModal = function(url, name) {
-    var element;
-    window.showModalDialog(url, this, "dialogWidth=300px; dialogHeight=120px;");
-    element = document.createElement('div');
-    element.id = 'transVal';
-    return element.value = name;
+    ele = $(document.createElement('div'))
+    ele.id = 'transVal'
+    ele.val(name)
+    return window.showModalDialog(url, this, "dialogWidth=300px; dialogHeight=120px;");
   };
+
+  /*
+    ele = $(document.createElement('div'))
+    ele.id = 'transVal'
+    ele.val(name)
+  */
+
 
 }).call(this);

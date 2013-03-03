@@ -17,12 +17,14 @@ for book in books
     popupModal(chrome.runtime.getURL('./mypopup.html'), pdf_name)
 
 popupModal = (url, name) ->
+  localStorage['transVal'] = name
   window.showModalDialog(
     url, #移動先
     this, #ダイアログに渡すパラメータ（この例では、自分自身のwindowオブジェクト）
     "dialogWidth=300px; dialogHeight=120px;"
   )
-  element = document.createElement('div')
-  element.id = 'transVal'
-  element.value = name
-
+###
+  ele = $(document.createElement('div'))
+  ele.id = 'transVal'
+  ele.val(name)
+###
